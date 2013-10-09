@@ -9,10 +9,7 @@ data = {}
 
 def main(argv):
     parse_args(argv)
-
     run_tests()
-
-    process_results()
 
 def usage():
     print """Usage: ./tester.py [-h] -c -i -o
@@ -120,6 +117,9 @@ def run_tests():
                     data[input_format[var_num]['name']][command_format[var_num]['cur_val']] = {'raw': []}
                 data[input_format[var_num]['name']][command_format[var_num]['cur_val']]['raw'].append(float(var))
                 var_num += 1
+
+        process_results()
+
         for var in command_format:
             if var == "repetitions" or var == "command":
                 continue
@@ -146,6 +146,7 @@ def process_results():
                 var_data[val]['stddev'] = numpy.std(var_data[val]['raw'])
                 print "\t" + str(var_data[val]['stddev']) + "",
             print
+        data[input_format[num]['name']] = {}
 
 if __name__ == "__main__":
     main(sys.argv[1:])
